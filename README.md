@@ -1,0 +1,109 @@
+# Programacion1_Comision4_Parcial2_Hualpa
+El diseño se basa en mapear una estructura de datos lógica a una estructura física de carpetas en el sistema de archivos.
+
+### Dominio y Jerarquía
+
+* **Dominio Elegido:** Gestión de Países.
+* **Niveles de Jerarquía (3):**
+    1.  `continente`
+    2.  `region`
+    3.  `gobierno` (Tipo de Gobierno)
+
+### Lógica de Almacenamiento (Basada en Directorios)
+
+La lógica consiste en que la ruta de carpetas *representa* los metadatos de los ítems que contiene. Los ítems (países) se almacenan en un archivo `items.csv` al final de la ruta jerárquica.
+
+**Ejemplo de Estructura de Directorios:**
+
+```
+datos_paises/
+└── America/
+    ├── Norte/
+    │   └── Republica/
+    │       └── items.csv
+    └── Sur/
+        ├── Monarquia/
+        │   └── items.csv
+        └── Republica/
+            └── items.csv
+└── Europa/
+    └── Occidental/
+        └── Republica/
+            └── items.csv
+```
+
+### Formato de Almacenamiento (CSV)
+
+El archivo `items.csv` al final de cada ruta contiene **solo los atributos del ítem**, definidos en `main.py` como `CAMPOS_CSV_ITEM`:
+
+* `nombre`
+* `poblacion`
+* `superficie`
+
+**Ejemplo (`.../America/Sur/Republica/items.csv`):**
+```csv
+nombre,poblacion,superficie
+Argentina,47000000,2780400
+Chile,19000000,756102
+```
+
+### Estructura Interna (Diccionario Python)
+
+Cuando la **función recursiva (Opción 1)** lee el sistema de archivos, consolida cada país en un único diccionario de Python. Este diccionario fusiona los datos del CSV con los datos de la jerarquía (la ruta) y añade la ruta del archivo para futuras modificaciones.
+
+```python
+{
+    # Atributos del CSV
+    'nombre': 'Argentina',
+    'poblacion': 47000000,
+    'superficie': 2780400,
+    
+    # Atributos de la Jerarquía (de la ruta)
+    'continente': 'America',
+    'region': 'Sur',
+    'gobierno': 'Republica',
+    
+    # Metadato clave para Modificar/Eliminar
+    'ruta_archivo': 'datos_paises/America/Sur/Republica/items.csv'
+}
+```
+
+## 2. Arquitectura del Software (Modularización)
+
+Para cumplir con las buenas prácticas, el proyecto está modularizado en **5 archivos** con responsabilidades claramente definidas:
+
+1.  `main.py` (**Controlador**): Define las constantes globales (`DIRECTORIO_DATOS`, `NIVELES_JERARQUIA`, etc.) y contiene el bucle principal del menú. Orquesta las llamadas a las otras capas.
+2.  `vistas.py` (**Vista**): Es el único archivo que usa `print()` para mostrar menús, tablas y resultados.
+3.  `funciones.py` (**Lógica de Negocio**): El "motor" del programa. Contiene la función `cargar_datos_recursivo`, `alta_item`, `filtrar_items`, `calcular_estadisticas`, etc. Llama a `persistencia` y `validaciones`.
+4.  `persistencia.py` (**Acceso a Datos**): Es el único archivo que sabe leer (`csv.DictReader`) y escribir (`csv.DictWriter`) archivos CSV. Usa `with open` y maneja los modos `'a'` (append) y `'w'` (write).
+5.  `validaciones.py` (**Utilidades**): Contiene todas las funciones de validación de entrada (`validar_entero_positivo`, `validar_string_alfabetico`, etc.) para cumplir con las **Validaciones Estrictas** de la Fase 3.
+
+## 3. Instrucciones de Uso
+
+### Prerrequisitos
+* Tener **Python 3.x** instalado.
+
+### Ejecución
+1.  Descargar o clonar el repositorio.
+2.  Colocar los 5 archivos (`main.py`, `vistas.py`, `funciones.py`, `persistencia.py`, `validaciones.py`) en la misma carpeta.
+3.  Abrir una terminal (como PowerShell o CMD) en esa carpeta.
+4.  Ejecutar el programa con el siguiente comando:
+
+    ```bash
+    python main.py
+    ```
+    (o `py main.py` si `python` no está en tu PATH)
+
+### Primeros Pasos
+El programa comenzará sin datos.
+
+1.  **Use la Opción [2] (Alta de Ítem)** primero.
+    * El programa le pedirá los 3 niveles de jerarquía (ej: "America", "Sur", "Republica").
+    * Luego le pedirá los atributos (ej: "Argentina", 47000000, 2780400).
+    * Esto creará automáticamente la carpeta `datos_paises/` y toda la sub-estructura de carpetas necesaria.
+    * Repita este paso para agregar varios países.
+
+2.  **Use la Opción [1] (Cargar/Recargar Datos)**.
+    * Esto ejecutará la función recursiva para leer toda la estructura que acaba de crear y cargarla en la memoria.
+
+3.  **¡Listo!** Ahora puede usar las demás opciones (Mostrar, Filtrar, Modificar, Eliminar, Ordenar, Estadísticas) sobre los datos cargados.
