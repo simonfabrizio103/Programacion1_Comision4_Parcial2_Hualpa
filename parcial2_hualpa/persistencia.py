@@ -21,6 +21,7 @@ def leer_csv_items(ruta_archivo_csv, jerarquia_info):
         # Usamos 'with open' para garantizar que el archivo se cierre
         # automáticamente, incluso si hay un error. (Requisito Fase 2)
         with open(ruta_archivo_csv, 'r', encoding='utf-8', newline='') as f:
+
             # DictReader es ideal porque lee directo a diccionarios.
             reader = csv.DictReader(f)
             for fila in reader:
@@ -36,10 +37,12 @@ def leer_csv_items(ruta_archivo_csv, jerarquia_info):
                     }
                     items.append(item)
                 except (ValueError, KeyError, TypeError) as e:
+
                     # Si una fila está mal (ej. "poblacion": "abc"), la saltamos.
                     print(
                         f"⚠️ Fila corrupta en {ruta_archivo_csv} omitida: {e}")
     except FileNotFoundError:
+
         # Manejo de excepción obligatorio (Requisito Fase 2)
         print(f"❌ Error: No se encontró el archivo {ruta_archivo_csv}")
     except Exception as e:
@@ -62,6 +65,7 @@ def reescribir_csv_especifico(ruta_archivo, items_del_archivo, campos_item_csv):
             writer.writeheader()  # Siempre escribimos la cabecera
 
             for item in items_del_archivo:
+                
                 # Nos aseguramos de escribir solo los campos del CSV,
                 # no los de jerarquía (ej. 'continente').
                 item_para_csv = {campo: item[campo]

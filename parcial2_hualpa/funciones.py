@@ -5,6 +5,7 @@
 # NO imprime menús ni tablas (eso lo hace 'vistas.py').
 
 import os
+
 # Importamos nuestros propios módulos
 import persistencia as db
 import validaciones as val
@@ -42,6 +43,7 @@ def cargar_datos_recursivo(ruta_base, niveles_jerarquia, ruta_relativa=""):
             # --- CASO BASE ---
             # Si es un archivo .csv, dejamos de "bajar" y leemos el contenido.
             elif entry.endswith('.csv'):
+
                 # Creamos el dict de jerarquía basado en la ruta de carpetas
                 partes_ruta = ruta_relativa.split(os.sep)
                 jerarquia_info = {}
@@ -171,7 +173,7 @@ def filtrar_items(items_globales, niveles_jerarquia, opcion, primer_nivel_key):
 def _buscar_item_unico(items_globales, niveles_jerarquia):
 
     """
-    Helper (LÓGICA): Función interna para U/D (Update/Delete).
+    Ayuda (LÓGICA): Función interna para U/D (Update/Delete).
     Permite al usuario encontrar un ítem específico por nombre exacto.
     Maneja el caso de nombres duplicados en diferentes jerarquías.
     """

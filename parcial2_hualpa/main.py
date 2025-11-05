@@ -20,6 +20,7 @@ def main():
     datos_cargados = False
 
     while True:
+
         # 1. Llamar a la VISTA para mostrar el menú
         vw.mostrar_menu()
 
@@ -33,6 +34,7 @@ def main():
             break
 
         elif opcion == 1:
+            
             # 3. Llamar a FUNCIONES para la lógica (Lectura Recursiva)
             print(f"Leyendo datos desde '{DIRECTORIO_DATOS}'...")
             items_globales = fn.cargar_datos_recursivo(
