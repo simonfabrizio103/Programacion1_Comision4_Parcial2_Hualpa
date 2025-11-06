@@ -26,7 +26,7 @@ La lógica consiste en que la ruta de carpetas *representa* los metadatos de los
 
 **Ejemplo de Estructura de Directorios:**
 ```
-datos_paise
+datos_paises/
 └── America/
     ├── Norte/
     │   └── Republica/
@@ -94,8 +94,8 @@ Para cumplir con las buenas prácticas, el proyecto está modularizado en **5 ar
 
 ### Ejecución
 
-1.  Descargar o clonar el repositorio.
-2.  Colocar los 5 archivos (`main.py`, `vistas.py`, `funciones.py`, `persistencia.py`, `validaciones.py`) en la misma carpeta.
+1.  Descargar o clonar el repositorio (asegúrate de incluir la carpeta `datos_paises`).
+2.  Colocar los 5 archivos `.py` y la carpeta `datos_paises` en la misma ubicación.
 3.  Abrir una terminal (como PowerShell o CMD) en esa carpeta.
 4.  Ejecutar el programa con el siguiente comando:
     ```bash
@@ -105,17 +105,12 @@ Para cumplir con las buenas prácticas, el proyecto está modularizado en **5 ar
 
 ### Primeros Pasos
 
-El programa comenzará sin datos.
+El repositorio ya incluye una carpeta `datos_paises` con datos de ejemplo.
 
-1.  **Use la Opción [2] (Alta de Ítem)** primero.
-    * El programa le pedirá los 3 niveles de jerarquía (ej: "America", "Sur", "Republica").
-    * Luego le pedirá los atributos (ej: "Argentina", 47000000, 2780400).
-    * Esto creará automáticamente la carpeta `datos_paises/` y toda la sub-estructura de carpetas necesaria.
-    * Repita este paso para agregar varios países.
-2.  **Use la Opción [1] (Cargar/Recargar Datos)**.
-    * Esto ejecutará la función recursiva para leer toda la estructura que acaba de crear y cargarla en la memoria.
-3.  **¡Listo!** Ahora puede usar las demás opciones (Mostrar, Filtrar, Modificar, Eliminar, Ordenar, Estadísticas) sobre los datos cargados.
-2.  **Use la Opción [1] (Cargar/Recargar Datos)**.
-    * Esto ejecutará la función recursiva para leer toda la estructura que acaba de crear y cargarla en la memoria.
-
-3.  **¡Listo!** Ahora puede usar las demás opciones (Mostrar, Filtrar, Modificar, Eliminar, Ordenar, Estadísticas) sobre los datos cargados.
+1.  **Use la Opción [1] (Cargar/Recargar Datos)** primero.
+    * Esto ejecutará la función recursiva para leer toda la estructura de carpetas y archivos CSV que ya están en el repositorio.
+2.  **Use la Opción [3] (Mostrar Ítems Totales)**.
+    * Podrá ver inmediatamente todos los países de ejemplo cargados.
+3.  **¡Listo!** Ahora puede probar las demás opciones:
+    * Use la **Opción [2] (Alta de Ítem)** para agregar un nuevo país (ej. "Argentina").
+    * Use el resto de opciones (Filtrar, Modificar, Eliminar, etc.) sobre los datos ya cargados.
